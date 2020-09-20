@@ -5,7 +5,7 @@
 #Xing Liu
 #Validations for year and month on FullRetirementAge program
 
-
+#MH Suggestion: i wish they hadn't combined the getting input/prompt message with validation
 def validationYear(prompt):
     while True:
         try:

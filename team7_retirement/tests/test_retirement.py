@@ -1,6 +1,5 @@
 import pytest
-from team7_retirement import FullRetirementAge
-
+from team7_retirement import FullRetirementAge, validations
 
 
 '''
@@ -32,6 +31,31 @@ each boundary condition. So for exampmle, next we'd test for 1938, 1939 and so, 
                           (1960,3,("67 and 0 months", 2027, 3)),
                           (2999,4,("67 and 0 months", 3066, 4))])
 
-def test_normal_retirement_(year, month, expected):
+def test_normal_retirement(year, month, expected):
     assert (FullRetirementAge.normal_retirement(year, month) ==
             expected)
+
+
+'''
+I have no idea how to test their validation because they have combined
+input with validation!
+'''
+def test_validation_year_invalid_input():
+ # code to test validation method
+    pass
+
+
+@pytest.mark.parametrize("month,expected", [(1, "January"),
+                                            (2, "February"),
+                                            (3, "March"),
+                                            (4, "April"),
+                                            (5, "May"),
+                                            (6, "June"),
+                                            (7, "July"),
+                                            (8, "August"),
+                                            (9, "September"),
+                                            (10, "October"),
+                                            (11, "November"),
+                                            (12, "December")])
+def test_month_to_string(month, expected):
+    assert FullRetirementAge.month_string(month) == expected
