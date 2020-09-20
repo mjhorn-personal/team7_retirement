@@ -66,6 +66,21 @@ def test_validation_year_invalid_input(monkeypatch):
     with pytest.raises(IndexError):
         validations.validationYear("test")
 
+'''
+tests invalid input by looping through list of invalid input values.
+If it reaches index error, the program handled all invalid inputs
+
+Invalid input: integers (-∞, 0] U [12, ∞), non-alphanumeric
+'''
+def test_validation_month_invalid_input(monkeypatch):
+    input_values = [0, -1, 13, "$$$", "*&#", "", "pfdsf"]
+    def mock_input(s):
+        return input_values.pop(0)
+    monkeypatch.setattr('builtins.input', mock_input)
+
+    with pytest.raises(IndexError):
+        validations.validationYear("test")
+
 
 '''
 tests the string to month function
