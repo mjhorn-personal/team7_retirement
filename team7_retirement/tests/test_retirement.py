@@ -6,7 +6,7 @@ from team7_retirement import FullRetirementAge, validations
 Example of a test I wrote. It tests the normal_retirement function 
 in FullRetirementAge.py from team 7
 
-If you run this test, you should see 2 tests passed. 
+If you run this test, you should see 1 tests passed. 
 
 I test normal_retirement(1900, 1) and the way they wrote their function,
 it should return a tuple with "65 and 0 months", 1965, and 1. 
@@ -30,21 +30,46 @@ each boundary condition. So for exampmle, next we'd test for 1938, 1939 and so, 
                           (1959,2,("66 and 10 months", 2025, 12)),
                           (1960,3,("67 and 0 months", 2027, 3)),
                           (2999,4,("67 and 0 months", 3066, 4))])
-
 def test_normal_retirement(year, month, expected):
     assert (FullRetirementAge.normal_retirement(year, month) ==
             expected)
 
+'''
+These tests will fail because validation occurs before function call
+
+@pytest.mark.parametrize("year,month",
+                         [(8, 1),
+                          (0, 2),
+                          (-1, 3),
+                          ("FGSD", 4),
+                          ("33", 5),
+                          ("/", 6),
+                          ("", 7),
+                          ('0', 8),
+                          ("$%^&", 9)])
+def test_normal_retirement_invalid_year(year, month):
+    with pytest.raises(ValueError):
+        FullRetirementAge.normal_retirement(year,month)
+'''
+
 
 '''
-I have no idea how to test their validation because they have combined
-input with validation!
+tests invalid input by looping through list of invalid input values.
+If it reaches index error, the program handled all invalid inputs
 '''
-def test_validation_year_invalid_input():
- # code to test validation method
-    pass
+def test_validation_year_invalid_input(monkeypatch):
+    input_values = [1899, 0, -1, "$$$", "*&#", "", "pfdsf", 3001]
+    def mock_input(s):
+        return input_values.pop(0)
+    monkeypatch.setattr('builtins.input', mock_input)
+
+    with pytest.raises(IndexError):
+        validations.validationYear("test")
 
 
+'''
+tests the string to month function
+'''
 @pytest.mark.parametrize("month,expected", [(1, "January"),
                                             (2, "February"),
                                             (3, "March"),
