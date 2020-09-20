@@ -17,6 +17,7 @@ def main():
     print("This will be in: ", final_month, " of ", year_full_retirement)
 
 
+# MH: more specific param names, this method should have been broken up.
 def normal_retirement(year, month):
     retirement_year = 0
     retirement_month = month
